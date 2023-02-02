@@ -1,8 +1,6 @@
 package com.example.wallpapers.domain
 
 interface WallpapersRepository {
+    suspend fun getWallpapersByCategory(category: Category): List<Wallpaper>
 
-    fun getWallpapersByCategory(categoryName: String): List<Wallpaper>
-
-    fun getCategories(): List<Category>
 }

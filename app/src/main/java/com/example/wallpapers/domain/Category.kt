@@ -1,6 +1,5 @@
 package com.example.wallpapers.domain
 
-data class Category(
-    val name: String,
-    val imageUrl: String
-    )
+enum class Category {
+    NATURE, SCIENCE, FEELINGS, INDUSTRY, PEOPLE, RELIGION, ANIMALS, FOOD
+}

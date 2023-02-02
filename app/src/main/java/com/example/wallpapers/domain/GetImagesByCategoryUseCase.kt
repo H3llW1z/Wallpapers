@@ -2,7 +2,7 @@ package com.example.wallpapers.domain
 
 
 class GetImagesByCategoryUseCase(private val repository: WallpapersRepository) {
-    operator fun invoke(categoryName: String): List<Wallpaper> {
-        return repository.getWallpapersByCategory(categoryName)
+    suspend operator fun invoke(category: Category): List<Wallpaper> {
+        return repository.getWallpapersByCategory(category)
     }
 }
