@@ -34,7 +34,7 @@ class CategoryDetailFragment : Fragment() {
         (requireActivity().application as WallpapersApplication).component
     }
 
-    private lateinit var adapter: WallpapersAdapter
+    private lateinit var wallpapersAdapter: WallpapersAdapter
 
     override fun onAttach(context: Context) {
         component.inject(this)
@@ -72,12 +72,12 @@ class CategoryDetailFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        adapter = WallpapersAdapter()
-        adapter.onItemClickListener = {
+        wallpapersAdapter = WallpapersAdapter()
+        wallpapersAdapter.onItemClickListener = {
             launchWallpaperDetailFragment(it.largeImageUrl)
         }
         with(binding.recyclerViewWallpapers) {
-            adapter = adapter
+            adapter = wallpapersAdapter
             layoutManager = GridLayoutManager(requireContext(), 2)
         }
     }
@@ -98,7 +98,7 @@ class CategoryDetailFragment : Fragment() {
                 }
                 is State.Success -> {
                     binding.progressBar.visibility = View.GONE
-                    adapter.submitList(it.data)
+                    wallpapersAdapter.submitList(it.data)
                 }
             }
         }
