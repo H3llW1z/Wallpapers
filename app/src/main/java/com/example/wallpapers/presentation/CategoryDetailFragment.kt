@@ -1,5 +1,6 @@
 package com.example.wallpapers.presentation
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,8 +12,10 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.wallpapers.R
 import com.example.wallpapers.databinding.FragmentCategoryDetailBinding
+import com.example.wallpapers.di.ApplicationComponent
 import com.example.wallpapers.presentation.adapters.WallpapersAdapter
 import com.google.android.material.snackbar.Snackbar
+import javax.inject.Inject
 
 class CategoryDetailFragment : Fragment() {
 
@@ -23,12 +26,20 @@ class CategoryDetailFragment : Fragment() {
     private val binding: FragmentCategoryDetailBinding
         get() = _binding ?: throw RuntimeException("FragmentCategoryDetailBinding is null")
 
-    private val viewModel by lazy {
-        ViewModelProvider(this)[CategoryDetailViewModel::class.java]
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+    private lateinit var viewModel: CategoryDetailViewModel
+
+    private val component: ApplicationComponent by lazy {
+        (requireActivity().application as WallpapersApplication).component
     }
 
-    private val adapter = WallpapersAdapter()
+    private lateinit var adapter: WallpapersAdapter
 
+    override fun onAttach(context: Context) {
+        component.inject(this)
+        super.onAttach(context)
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -44,6 +55,9 @@ class CategoryDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel =
+            ViewModelProvider(this, viewModelFactory)[CategoryDetailViewModel::class.java]
+
         setupRecyclerView()
         setupStateObservation()
         viewModel.load(args.category)
@@ -58,11 +72,14 @@ class CategoryDetailFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
+        adapter = WallpapersAdapter()
         adapter.onItemClickListener = {
             launchWallpaperDetailFragment(it.largeImageUrl)
         }
-        binding.recyclerViewWallpapers.adapter = adapter
-        binding.recyclerViewWallpapers.layoutManager = GridLayoutManager(requireContext(), 2)
+        with(binding.recyclerViewWallpapers) {
+            adapter = adapter
+            layoutManager = GridLayoutManager(requireContext(), 2)
+        }
     }
 
     private fun setupStateObservation() {

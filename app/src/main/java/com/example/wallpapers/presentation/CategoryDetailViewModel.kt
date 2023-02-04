@@ -4,16 +4,17 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.wallpapers.data.implementation.WallpapersRepositoryImpl
 import com.example.wallpapers.domain.Category
 import com.example.wallpapers.domain.ErrorEntity
 import com.example.wallpapers.domain.GetImagesByCategoryUseCase
 import com.example.wallpapers.domain.Result
 import kotlinx.coroutines.launch
-class CategoryDetailViewModel : ViewModel() {
+import javax.inject.Inject
 
-    private val repository = WallpapersRepositoryImpl()
-    private val getImagesByCategoryUseCase = GetImagesByCategoryUseCase(repository)
+class CategoryDetailViewModel @Inject constructor(
+    private val getImagesByCategoryUseCase: GetImagesByCategoryUseCase
+) : ViewModel() {
+
 
     private val _state: MutableLiveData<State> = MutableLiveData()
 
@@ -25,7 +26,7 @@ class CategoryDetailViewModel : ViewModel() {
             _state.value = State.Progress
             viewModelScope.launch {
                 when (val result = getImagesByCategoryUseCase(category)) {
-                    is Result.Error -> when(result.error) {
+                    is Result.Error -> when (result.error) {
                         is ErrorEntity.NetworkFailure -> _state.value = State.NetworkError
                         is ErrorEntity.ServerError -> _state.value = State.ServerError
                     }

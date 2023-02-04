@@ -13,4 +13,6 @@
     <string name="server_error_ocurred">Произошла ошибка сервера</string>
     <string name="try_again">Попробовать снова</string>
     <string name="check_internet_connection">Проверьте подключение к интернету</string>
+    <string name="set_as_wallpaper">УСТАНОВИТЬ НА РАБОЧИЙ СТОЛ</string>
+    <string name="wallpaper_image">Изображение обоев</string>
 </resources>

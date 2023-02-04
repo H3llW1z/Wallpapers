@@ -1,13 +1,14 @@
 package com.example.wallpapers.data.implementation
 
-import com.example.wallpapers.data.api.ApiFactory
+import com.example.wallpapers.data.api.ApiService
 import com.example.wallpapers.data.mappers.mapCategoryToCategoryName
 import com.example.wallpapers.data.mappers.toEntity
 import com.example.wallpapers.domain.*
+import javax.inject.Inject
 
-class WallpapersRepositoryImpl : WallpapersRepository {
-
-    private val apiService = ApiFactory.apiService
+class WallpapersRepositoryImpl @Inject constructor(
+    private val apiService: ApiService
+) : WallpapersRepository {
 
     override suspend fun getWallpapersByCategory(category: Category): Result<List<Wallpaper>> {
         try {
