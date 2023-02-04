@@ -7,7 +7,7 @@ import com.example.wallpapers.domain.Wallpaper
 fun WallpaperDto.toEntity(): Wallpaper {
     return Wallpaper(
         id = id,
-        previewUrl = previewURL,
+        previewUrl = webformatURL,
         largeImageUrl = largeImageURL
     )
 }

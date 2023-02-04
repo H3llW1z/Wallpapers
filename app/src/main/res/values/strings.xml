@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">Wallpapers</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="animals">Животные</string>
+    <string name="science">Наука</string>
+    <string name="feelings">Чувства</string>
+    <string name="religion">Религия</string>
+    <string name="nature">Природа</string>
+    <string name="industry">Промышленность</string>
+    <string name="food">Еда</string>
+    <string name="people">Люди</string>
+    <string name="server_error_ocurred">Произошла ошибка сервера</string>
+    <string name="try_again">Попробовать снова</string>
+    <string name="check_internet_connection">Проверьте подключение к интернету</string>
 </resources>
